@@ -8,7 +8,7 @@ from variables import RESOURCES_ROOT
 feature_data_router = APIRouter()
 
 
-@feature_data_router.get('/{data_name}/')
+@feature_data_router.get('/{data_name}')
 async def feature_data_api(data_name: str):
     try:
         item = get_feature_data(data_name)
@@ -26,7 +26,7 @@ def get_feature_data(data_name, root_directory=path.join(RESOURCES_ROOT, 'featur
             source = Source(file_name, root_directory)
 
             data = load_data(source)
-            feature = {'name': source.name, 'content': data, 'type': source.extensions}
+            feature = {'name': source.name, 'content': data, 'type': source.extension}
             return feature
 
     return {}

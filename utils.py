@@ -11,12 +11,12 @@ class Source(object):
         self.file_path = file_path
         self.full_path = path.join(self.root, self.file_path)
         self.name = split_name[0]
-        self.extensions = split_name[:0:-1]
+        self.extension = split_name[-1]
 
 
 def load_data(source):
     with open(source.full_path, 'rb') as f:
         data = f.read()
-        if source.extensions == "yaml":
-            yaml.safe_load(data)
+        if source.extension == "yaml":
+            data = yaml.safe_load(data)
     return data

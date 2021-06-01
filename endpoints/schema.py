@@ -8,7 +8,7 @@ from variables import RESOURCES_ROOT
 schema_router = APIRouter()
 
 
-@schema_router.get('/{schema_type}/')
+@schema_router.get('/{schema_type}')
 async def get_schema_configurations_api(schema_type: str):
     try:
         item = get_schema_configurations(schema_type)

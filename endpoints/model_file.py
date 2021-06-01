@@ -9,7 +9,7 @@ from variables import MODELS_ROOT
 models_router = APIRouter()
 
 
-@models_router.get('/{model_name}/{file_name}/')
+@models_router.get('/{model_name}/{file_name}')
 async def get_model_file_api(model_name: str, file_name: str):
     file_path = path.join(MODELS_ROOT, model_name, file_name)
     return FileResponse(file_path)
