@@ -12,7 +12,7 @@ class ConfigResponse(BaseModel):
     config: dict
 
 
-@config_router.get('/{tenant_name}', response_model=ConfigResponse)
+@config_router.get('/{tenant_name}/config', response_model=ConfigResponse)
 async def get_config(tenant_name: str, file_name: Optional[str] = None):
     try:
         config = get_tenant_configuration(tenant_name)

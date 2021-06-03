@@ -10,7 +10,7 @@ from endpoints.schema import schema_router
 app = FastAPI(title='Configuration')
 
 router = APIRouter()
-router.include_router(config_router, prefix='/config')
+router.include_router(config_router, prefix='/tenants')
 router.include_router(schema_router, prefix='/schema')
 router.include_router(feature_data_router, prefix='/feature_data')
 router.include_router(models_router, prefix='/model-files')
