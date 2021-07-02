@@ -1,4 +1,4 @@
-from os import walk, path
+from os import path, listdir
 
 from fastapi import APIRouter, HTTPException
 
@@ -6,6 +6,16 @@ from utils import Source, load_data
 from variables import RESOURCES_ROOT
 
 feature_data_router = APIRouter()
+
+
+@feature_data_router.get('')
+async def feature_datas_api():
+    try:
+        item = get_feature_data()
+    except TypeError as e:
+        raise HTTPException(status_code=404, detail=f'Unable to read configuration for feature data')
+
+    return item
 
 
 @feature_data_router.get('/{data_name}')
@@ -18,15 +28,17 @@ async def feature_data_api(data_name: str):
     return item
 
 
-def get_feature_data(data_name, root_directory=path.join(RESOURCES_ROOT, 'feature_data')):
-    root, dir_names, file_names = next(walk(root_directory))
+def get_feature_data(data_name=None, root_directory=path.join(RESOURCES_ROOT, 'feature_data')):
+    file_names = listdir(root_directory)
+    feature_data = []
 
     for file_name in file_names:
-        if file_name.split('.')[0] == data_name:
+        if not data_name or file_name.split('.')[0] == data_name:
             source = Source(file_name, root_directory)
-
             data = load_data(source)
-            feature = {'name': source.name, 'content': data, 'type': source.extension}
-            return feature
+            feature = {'name': source.name, 'content': data, 'extension': source.extension}
+            if data_name:
+                return feature
+            feature_data.append(feature)
 
-    return {}
+    return feature_data

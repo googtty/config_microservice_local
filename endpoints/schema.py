@@ -1,4 +1,4 @@
-from os import walk, path
+from os import path, listdir
 
 from fastapi import APIRouter, HTTPException
 
@@ -35,7 +35,7 @@ def get_schema_configurations(schema_type, schema_name=None, root_directory=RESO
     if schema_name:
         file_names = [schema_name + '.txt']
     else:
-        root, dir_names, file_names = next(walk(schema_dir))
+        file_names = listdir(schema_dir)
 
     schema_list = []
 
